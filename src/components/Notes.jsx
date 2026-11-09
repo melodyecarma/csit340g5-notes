@@ -22,6 +22,18 @@ function Notes() {
       setForm({ ...form, [name]: value })
     }
 
+    function handleSubmit(e) {
+      e.preventDefault()
+
+      const title = form.title.trim()
+      const body = form.body.trim()
+
+      if (!title || !body) return
+
+      setNotes([...notes, { id: Date.now(), title, body }])
+      setForm({ title: '', body: '' })
+    }
+
     return (
         <div className="grid min-h-screen grid-cols-[420px_1fr]">
             <aside className="sticky top-0 flex h-screen flex-col gap-5 bg-white px-8 py-9 shadow-[0_2px_4px_0_rgba(0,0,0,0.2),0_25px_50px_0_rgba(0,0,0,0.1)]">
@@ -35,7 +47,7 @@ function Notes() {
                     className="h-[52px] w-full border border-[#e6e6e6] px-4 text-lg outline-none placeholder:text-black/40 placeholder:italic focus:border-[#cf7d7d]"
                   />
                 </div>
-                <form className="grid gap-3">
+                <form className="grid gap-3" onSubmit={handleSubmit}>
                  <p className="text-[13px] font-normal tracking-wide text-[#949494]">NEW NOTE</p>
                   <input
                     name="title"
